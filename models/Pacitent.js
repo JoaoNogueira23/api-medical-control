@@ -18,6 +18,9 @@ const PacitentModel = db.define('tb_pacitents_register', {
         type: Sequelize.STRING,
         allowNull: true
     },
+    gender:{
+        type: Sequelize.STRING
+    },
     id:{
         type: Sequelize.INTEGER,
         primaryKey: true,
