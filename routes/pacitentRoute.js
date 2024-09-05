@@ -20,7 +20,7 @@ router.get('/data', (req, res) => {
 
 // rota para adicionar novos pacientes
 router.post('/add', (req, res) => {
-    let {name, age, weight, height, historical, gender, id} = req.body;
+    let {name, age, weight, height, historical, gender, emailList} = req.body;
 
     PacitentModel.create({
         name,
@@ -29,7 +29,7 @@ router.post('/add', (req, res) => {
         height,
         historical,
         gender,
-        id
+        emailList
     })
     .then(() => {
         res.status(200).json({ message: 'Paciente adicionado com sucesso!' })

@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const app = express()
 db = require('./db/connection');
@@ -11,6 +12,7 @@ app.listen(PORT, function() {
 })
 // Middlewares
 app.use(bodyParser.urlencoded({extends: false}))
+app.use(cors())
 
 // database connection
 db

@@ -21,6 +21,9 @@ const PacitentModel = db.define('tb_pacitents_register', {
     gender:{
         type: Sequelize.STRING
     },
+    emailList:{
+        type: Sequelize.STRING
+    },
     id:{
         type: Sequelize.INTEGER,
         primaryKey: true,
