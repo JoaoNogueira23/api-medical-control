@@ -8,11 +8,8 @@ const MedicalCertificateModel = db.define('tb_medical_certificate', {
     describe:{
         type: Sequelize.STRING
     },
-    start_date:{
-        type: Sequelize.STRING
-    },
-    end_date:{
-        type: Sequelize.STRING
+    daysCertificated:{
+        type: Sequelize.INTEGER
     },
     id:{
         type: Sequelize.INTEGER,

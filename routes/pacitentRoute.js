@@ -4,7 +4,7 @@ const router = express.Router();
 const MedicalCertificateModel = require('../models/MedicalCertificate');
 
 // rota para fazer o get de pacientes
-router.get('/data', (req, res) => {
+router.get('/data-pacitents', (req, res) => {
     PacitentModel.findAll({
         order: [['createdAt', 'DESC']]
     })
@@ -18,8 +18,25 @@ router.get('/data', (req, res) => {
     })
 })
 
+// rota para fazer o get de atestados médicos
+router.get('/data-certificates', (req, res) => {
+    MedicalCertificateModel.findAll({
+        order: [['createdAt', 'DESC']]
+    })
+    .then(pacitents => {
+        res.status(200).json({data: pacitents})
+        return;
+    })
+    .catch(err => {
+        res.status(500).json({message: "Erro no processamento dos pacientes!"})
+        return;
+    })
+})
+
+
+
 // rota para adicionar novos pacientes
-router.post('/add', (req, res) => {
+router.post('/add-pacitent', (req, res) => {
     let {name, age, weight, height, historical, gender, emailList} = req.body;
 
     PacitentModel.create({
@@ -46,29 +63,29 @@ router.post('/add', (req, res) => {
     
 })
 
-// rota para registrar atestados
+// rota para adicionar novos atestados medicos
 router.post('/add-certificate', (req, res) => {
-    let {id_pacitent, describe, start_date, end_date} = req.body;
+    console.log(req.body)
+    let {describe, id_pacitent, daysCertificated} = req.body;
 
     MedicalCertificateModel.create({
-        id_pacitent,
-        describe,
-        start_date,
-        end_date
+        describe, 
+        id_pacitent, 
+        daysCertificated
     })
     .then(() => {
-        res.status(200).json({ message: 'Atestado resgistrado com sucesso!' })
+        res.status(200).json({ message: 'Atestado registrado com sucesso!' })
         return
     }
         
     )
     .catch(err => {
         console.log(err)
-        res.status(500).json({ message: 'Erro no registro do atestado!' })
+        res.status(500).json({ message: 'Erro no processamento do atestado!' })
         return;
     }
     )
-
+    
 })
 
 module.exports = router;
