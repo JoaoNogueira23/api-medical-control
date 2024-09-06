@@ -1,90 +1,103 @@
 const express = require('express');
-const PacitentModel = require('../models/Pacitent');
 const router = express.Router();
-const MedicalCertificateModel = require('../models/MedicalCertificate');
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 // rota para fazer o get de pacientes
-router.get('/data-pacitents', (req, res) => {
-    PacitentModel.findAll({
-        order: [['createdAt', 'DESC']]
-    })
-    .then(pacitents => {
+router.get('/data-pacitents', async (req, res) => {
+
+    try{
+        const pacitents = await prisma.pacitentModel.findMany()
         res.status(200).json({data: pacitents})
-        return;
-    })
-    .catch(err => {
+    }catch(err){
+        console.log(err)
         res.status(500).json({message: "Erro no processamento dos pacientes!"})
-        return;
-    })
+    }
 })
 
 // rota para fazer o get de atestados médicos
-router.get('/data-certificates', (req, res) => {
-    MedicalCertificateModel.findAll({
-        order: [['createdAt', 'DESC']]
-    })
-    .then(pacitents => {
-        res.status(200).json({data: pacitents})
-        return;
-    })
-    .catch(err => {
-        res.status(500).json({message: "Erro no processamento dos pacientes!"})
-        return;
-    })
+router.get('/data-certificates', async (req, res) => {
+    try{
+        const medicalCetificates = await prisma.medicalCertificateModel.findMany({
+            select: {
+                id: true,
+                describe: true,
+                start_date: true,
+                end_date: true,
+                name: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
+        const formattedData = medicalCetificates.map(item => ({
+            ...item,
+            name: item.name.name
+        }));
+
+        res.status(200).json({data: formattedData})
+    }catch(err){
+        console.log(err)
+        res.status(500).json({message: "Erro no processamento dos atestados!"})
+    }
 })
 
 
 
 // rota para adicionar novos pacientes
-router.post('/add-pacitent', (req, res) => {
-    let {name, age, weight, height, historical, gender, emailList} = req.body;
+router.post('/add-pacitent', async (req, res) => {
+    const payload = req.body
+    try{
+        await prisma.pacitentModel.create({
+            data:{
+                name: payload.name,
+                age: parseInt(payload.age),
+                height: parseFloat(payload.height),
+                weight: parseFloat(payload.weight),
+                historical: payload.historical,
+                gender: payload.gender,
+                emailList: payload.emailList
+            }
+        })
 
-    PacitentModel.create({
-        name,
-        age,
-        weight,
-        height,
-        historical,
-        gender,
-        emailList
-    })
-    .then(() => {
-        res.status(200).json({ message: 'Paciente adicionado com sucesso!' })
+        res.status(200).json({ message: 'Paciente registrado com sucesso!' })
         return
-    }
-        
-    )
-    .catch(err => {
+
+    } catch(err){
         console.log(err)
-        res.status(500).json({ message: 'Erro ao adicionar o paciente' })
+        res.status(500).json({ message: 'Erro no processamento do paciente!' })
         return;
     }
-    )
+    
     
 })
 
 // rota para adicionar novos atestados medicos
-router.post('/add-certificate', (req, res) => {
-    console.log(req.body)
-    let {describe, id_pacitent, daysCertificated} = req.body;
+router.post('/add-certificate', async (req, res) => {
+    const payload = req.body
+    console.log(payload)
+    const start_date_ = new Date(payload.start_date)
+    const end_date_ = new Date(payload.end_date)
+    try{
+        await prisma.medicalCertificateModel.create({
+            data:{
+                id_pacitent: payload.id_pacitent,
+                describe: payload.describe,
+                start_date: start_date_,
+                end_date: end_date_
+            }
+        })
 
-    MedicalCertificateModel.create({
-        describe, 
-        id_pacitent, 
-        daysCertificated
-    })
-    .then(() => {
         res.status(200).json({ message: 'Atestado registrado com sucesso!' })
         return
-    }
-        
-    )
-    .catch(err => {
+
+    } catch(err){
         console.log(err)
         res.status(500).json({ message: 'Erro no processamento do atestado!' })
         return;
     }
-    )
     
 })
 

@@ -10,6 +10,7 @@
   "author": "JoaoMartins23",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^5.19.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
@@ -17,5 +18,8 @@
     "nodemon": "^3.1.4",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "prisma": "^5.19.1"
   }
 }

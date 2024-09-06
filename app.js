@@ -12,6 +12,7 @@ app.listen(PORT, function() {
 })
 // Middlewares
 app.use(bodyParser.urlencoded({extends: false}))
+app.use(bodyParser.json())
 app.use(cors())
 
 // database connection
