@@ -7,7 +7,7 @@ db = require('./db/connection');
 
 app.listen({
     host: '0.0.0.0',
-    port: process.env.PORT ?? 3000
+    port: Number(process.env.PORT) ?? 3000
 }, function() {
     console.log(`APP RUNING IN ${process.env.PORT ?? 3000}`)
 })
