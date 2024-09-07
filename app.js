@@ -5,10 +5,11 @@ const cors = require('cors')
 const app = express()
 db = require('./db/connection');
 
-const PORT = 3000;
-
-app.listen(PORT, function() {
-    console.log(`APP RUNING IN ${PORT}`)
+app.listen({
+    host: '0.0.0.0',
+    port: process.env.PORT ?? 3000
+}, function() {
+    console.log(`APP RUNING IN ${process.env.PORT ?? 3000}`)
 })
 // Middlewares
 app.use(bodyParser.urlencoded({extends: false}))
