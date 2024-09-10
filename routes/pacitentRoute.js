@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client')
+const { v4: uuidv4 } = require('uuid');
+const { format, differenceInDays } = require('date-fns');
 
 const prisma = new PrismaClient()
 
@@ -32,10 +34,20 @@ router.get('/data-certificates', async (req, res) => {
                 }
             }
         })
-        const formattedData = medicalCetificates.map(item => ({
-            ...item,
-            name: item.name.name
-        }));
+        const formattedData = medicalCetificates.map(item => {
+            let start_date_ = new Date(item.start_date)
+            let end_date_ = new Date(item.end_date)
+            return(
+                {
+                    ...item,
+                    name: item.name.name,
+                    start_date: format(start_date_, 'dd-MM-yyyy'),
+                    end_date: format(end_date_, 'dd-MM-yyyy'),
+                    differenceDays: Number(differenceInDays(end_date_, start_date_))
+                }
+            )
+             
+        });
 
         res.status(200).json({data: formattedData})
     }catch(err){
@@ -58,7 +70,8 @@ router.post('/add-pacitent', async (req, res) => {
                 weight: parseFloat(payload.weight),
                 historical: payload.historical,
                 gender: payload.gender,
-                emailList: payload.emailList
+                emailList: payload.emailList,
+                id: uuidv4()
             }
         })
 
@@ -77,7 +90,6 @@ router.post('/add-pacitent', async (req, res) => {
 // rota para adicionar novos atestados medicos
 router.post('/add-certificate', async (req, res) => {
     const payload = req.body
-    console.log(payload)
     const start_date_ = new Date(payload.start_date)
     const end_date_ = new Date(payload.end_date)
     try{

@@ -7,24 +7,14 @@ db = require('./db/connection');
 
 app.listen({
     host: '0.0.0.0',
-    port: Number(process.env.PORT) ?? 3000
-}, function() {
+    port: process.env.PORT ? process.env.PORT : 3000
+}, () => {
     console.log(`APP RUNING IN ${process.env.PORT ?? 3000}`)
 })
 // Middlewares
 app.use(bodyParser.urlencoded({extends: false}))
 app.use(bodyParser.json())
 app.use(cors())
-
-// database connection
-db
-    .authenticate()
-    .then(() => {
-        console.log("Database connect with sucess!")
-    })
-    .catch(err => {
-        console.log("Connection error!")
-    })
 
 // routes
 app.use('/pacitents', require('./routes/pacitentRoute'))

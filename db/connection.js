@@ -1,8 +1,19 @@
-const Sequelize = require('sequelize')
+const mysql = require('mysql2/promise')
+const config = require('../config/config')
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './db/app.db'
-})
+async function connection() {
+    try{
+        const pool = await mysql.createPool(config.db)
+        const conn = await pool.getConnection()
+        return conn
+    }catch{(err) => {
+        console.log(err)
+        pool.releaseConnection(conn);
+        return
+    }
+    }
+}
 
-module.exports = sequelize;
+module.exports = {
+    connection
+}
