@@ -10,7 +10,6 @@ RUN npm install
 
 ## comando para gerar o Prisma Client
 RUN npx prisma generate
-RUN npx prisma migrate deploy
 
 COPY . .
 
