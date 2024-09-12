@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:16.15-alpine
 
 WORKDIR /usr/src/app
 
@@ -13,8 +13,6 @@ RUN npm install
 ## comando para gerar o Prisma Client
 RUN npx prisma generate
 
-## comando para fazer a migração do banco de dados
-RUN npx prisma migrate deploy
 COPY . .
 
 ### comandos para iniciar a aplicação em prod
