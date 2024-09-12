@@ -106,11 +106,28 @@ router.post('/add-certificate', async (req, res) => {
         return
 
     } catch(err){
-        console.log(err)
         res.status(500).json({ message: 'Erro no processamento do atestado!' })
         return;
     }
     
+})
+
+router.put('/edit-pacitent', async (req, res) => {
+    const payload = req.body
+    try{
+        await prisma.pacitentModel.update({
+            where: {
+                id: payload.id
+            },
+            data: {
+                emailList: payload.emailList
+            }
+        })
+        res.status(200).json({message: 'Cadastro atualizado com sucesso!'})
+    }catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Erro na atualização de cadastro do paciente!'})
+    }
 })
 
 module.exports = router;
