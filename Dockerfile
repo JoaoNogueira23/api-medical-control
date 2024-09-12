@@ -4,8 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install
-
 # Gera os arquivos do Prisma Client
 RUN rm -rf node_modules
 RUN npm install
@@ -16,5 +14,5 @@ RUN npx prisma generate
 COPY . .
 
 ### comandos para iniciar a aplicação em prod
-CMD ["npm", "start", "npx", "prisma"]
+CMD ["npm", "start"]
 EXPOSE 3000
