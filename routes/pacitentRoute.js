@@ -7,7 +7,7 @@ const { format, differenceInDays } = require('date-fns');
 const prisma = new PrismaClient()
 
 // rota para fazer o get de pacientes
-router.get('/data-pacitents', async (req, res) => {
+router.get('/data-pacitents', async (_req, res) => {
 
     try{
         const pacitents = await prisma.pacitentModel.findMany()
@@ -19,7 +19,7 @@ router.get('/data-pacitents', async (req, res) => {
 })
 
 // rota para fazer o get de atestados médicos
-router.get('/data-certificates', async (req, res) => {
+router.get('/data-certificates', async (_req, res) => {
     try{
         const medicalCetificates = await prisma.medicalCertificateModel.findMany({
             select: {

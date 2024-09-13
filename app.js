@@ -18,3 +18,4 @@ app.use(cors())
 
 // routes
 app.use('/pacitents', require('./routes/pacitentRoute'))
+app.use('/charts', require('./routes/routeCharts'))
