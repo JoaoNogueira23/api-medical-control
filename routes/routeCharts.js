@@ -24,11 +24,21 @@ router.get('/data-cards', async (req, res) => {
         dataCertificatesMedical.forEach(item=> {
             item.daysDifference == 1 ? numberCertificatesD1++ : ''
         });
-        let formatedResponse = {
-            numberPacitents: dataPacitent,
-            numberCertificates: dataCertificatesMedical.length,
-            numberCertificatesD1: numberCertificatesD1
-        }
+        let formatedResponse = [
+            {
+                name: 'Pacientes',
+                value: dataPacitent
+            },
+            {
+                name: 'Pacientes de Licença',
+                value: dataCertificatesMedical.length
+            },
+            {
+                name: 'Pacientes de Licença',
+                value: numberCertificatesD1
+            }
+        ]
+           
 
         res.status(200).json({data: formatedResponse})
 
