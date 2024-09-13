@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client')
-const { format, differenceInDays } = require('date-fns');
 
 const prisma = new PrismaClient()
 // route cards
@@ -34,7 +33,7 @@ router.get('/data-cards', async (req, res) => {
                 value: dataCertificatesMedical.length
             },
             {
-                name: 'Pacientes de Licença',
+                name: 'Pacientes Críticos',
                 value: numberCertificatesD1
             }
         ]
