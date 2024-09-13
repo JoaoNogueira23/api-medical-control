@@ -12,9 +12,9 @@
 API de integração para o Projeto Medical Control (<a href="https://github.com/JoaoNogueira23/medical-control" style="text-decoration:none;" target="_blank">Link</a>).
 
 ## Funcionalidades
-A API possui 4 rotas, 2 de GET, onde faço a busca por dados de pacientes cadastrados e de atestados médico cadastrados, e 2 de POST, a quais são responsáveis por fazerem o cadastramento tanto de novos pacientes quanto de novos atestados médico.
+A API possui três rotas principais. A primeira é responsável pelo gerenciamento de dados cadastrais, permitindo o registro de pacientes e atestados médicos. A segunda rota serve para a obtenção de dados, visando a geração de métricas. Por fim, a terceira rota é dedicada ao serviço de envio de e-mails. Essas rotas trabalham em conjunto para realizar o cadastramento de novos pacientes e atestados, além de garantir a coleta de dados para métricas e o envio de notificações por e-mail.
 
-<img src="./public/architectural_design.webp"/>
+<img src="./public/image_describe.png"/>
 
 ## Tecnologias
 <p>
