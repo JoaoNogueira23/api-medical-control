@@ -25,20 +25,14 @@ router.post('/send-email', async (req, res) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
             <body
-            style="
-            display:flex; 
-            align-items: center; 
-            justify-content: center;
-            height: 100vh;
-            background-color: aquamarine;
-            "
+            style="padding:2rem;margin:2rem"
             >
-                Prezado(a) ${payload.name}, informamos que a sua licença termina no dia ${payload.end_date}.
-                <br>
+                Prezado(a) ${payload.name}, informamos que a sua licença termina no dia ${payload.end_date}.<br>
                 Fique atento e, em caso de dúvidas favor entrar em contato.
                 <br>
                 <br>
                 Melhores cumprimentos!
+               
             </body>
         </html>
         `

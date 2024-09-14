@@ -29,7 +29,8 @@ router.get('/data-certificates', async (_req, res) => {
                 end_date: true,
                 name: {
                     select: {
-                        name: true
+                        name: true,
+                        emailList: true
                     }
                 }
             }
@@ -43,7 +44,8 @@ router.get('/data-certificates', async (_req, res) => {
                     name: item.name.name,
                     start_date: format(start_date_, 'dd-MM-yyyy'),
                     end_date: format(end_date_, 'dd-MM-yyyy'),
-                    differenceDays: Number(differenceInDays(end_date_, start_date_))
+                    differenceDays: Number(differenceInDays(end_date_, start_date_)),
+                    emailList: item.name.emailList
                 }
             )
              
